@@ -1,5 +1,11 @@
 import api from "./config";
-import {allFiles, FileDyID, MyFilesIDArray, UploadFileReturnType} from "../EndpointTypes/files.types";
+import {
+    allFiles,
+    DeleteFileReturnType,
+    FileDyID,
+    MyFilesIDArray,
+    UploadFileReturnType
+} from "../EndpointTypes/files.types";
 
 export async function getAllFilesID() {
     return await api.get<allFiles>('file/all')
@@ -30,4 +36,9 @@ export async function uploadFileByFile(file) {
 export async function myFiles() {
     return await api.get<MyFilesIDArray>("/file/my")
         .then((res) => res.data.myFilesIDArray)
+}
+
+export async function deleteFileByID(fileID) {
+    return await api.post<DeleteFileReturnType>('/file/delete/' + fileID)
+        .then((res) => res.data.message)
 }

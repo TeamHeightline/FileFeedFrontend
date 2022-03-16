@@ -1,6 +1,8 @@
 import {makeAutoObservable} from "mobx";
 import {FileEntity} from "../../../DataLayer/EndpointTypes/files.types";
-import {getFileByID} from "../../../DataLayer/TransportLayer/files.resolvers";
+import {deleteFileByID, getFileByID} from "../../../DataLayer/TransportLayer/files.resolvers";
+import UserGlobalStore from "../../../GlobalStorages/user-storage";
+import FileFolderObject from "../../FileFolder/Store/file-folder-store";
 
 export default class FileByIdStore {
     constructor(id: string) {
@@ -10,6 +12,10 @@ export default class FileByIdStore {
     }
 
     id?: string
+
+    /**
+     * Раздел отвечающий за расчеты всего, что отображается в UI
+     */
 
     fileData?: FileEntity
 
@@ -36,9 +42,17 @@ export default class FileByIdStore {
         return returnDate
     }
 
+    get isUserCanDeleteFile() {
+        return Number(this.fileData?.user.id) === Number(UserGlobalStore.userData?.id)
+    }
+
+    /**
+     * Работа со всем, что связано с загрузкой данных
+     */
+
     loading = true
 
-    setLoadingComplete() {
+    private setLoadingComplete() {
         this.loading = false
     }
 
@@ -52,5 +66,28 @@ export default class FileByIdStore {
             this.setLoadingComplete()
         }
     }
+
+    /**
+     * Раздел. отвечающий за удаление файлов
+     */
+
+    isShowDeleteDialog = false
+
+    openDeleteDialog = () => {
+        this.isShowDeleteDialog = true
+    }
+
+    closeDeleteDialog = () => {
+        this.isShowDeleteDialog = false
+    }
+
+    onDeleteFileButtonClick = async () => {
+        this.closeDeleteDialog()
+        if (this.fileData?.id) {
+            console.log(await deleteFileByID(this.fileData?.id))
+            await FileFolderObject.reloadAllFileIDArrays()
+        }
+    }
+
 
 }

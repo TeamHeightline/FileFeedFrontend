@@ -1,6 +1,6 @@
 import {autorun, makeAutoObservable} from "mobx"
 import {getAllFilesID, uploadFileByFile} from "../../../DataLayer/TransportLayer/files.resolvers";
-import PCabinetObject from "../../PersonalCabinet/Store/p-cabinet-store";
+import PCabinetObject from "../../../Pages/PersonalCabinet/Store/p-cabinet-store";
 
 enum UPLOADING_STATUS {
     UPLOADING = "UPLOADING",
@@ -35,14 +35,18 @@ class FileFolderStore {
         this.uploadingStatus = value
     }
 
+    reloadAllFileIDArrays = async () => {
+        await this.loadAllFileIDsForPage()
+        await PCabinetObject.loadMyFilesIDArray()
+    }
+
     onFileSelect = async (event) => {
         this.setUploadingStatus(UPLOADING_STATUS.UPLOADING)
         const file = event.target.files[0]
         const isUploadedSuccessful = await uploadFileByFile(file)
         if (isUploadedSuccessful) {
             this.setUploadingStatus(UPLOADING_STATUS.SUCCESSFUL)
-            await this.loadAllFileIDsForPage()
-            await PCabinetObject.loadMyFilesIDArray()
+            await this.reloadAllFileIDArrays()
         } else {
             this.setUploadingStatus(UPLOADING_STATUS.ERROR)
         }

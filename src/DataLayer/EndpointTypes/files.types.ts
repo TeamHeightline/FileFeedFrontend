@@ -25,3 +25,7 @@ export type UploadFileReturnType = {
 export type MyFilesIDArray = {
     myFilesIDArray: string[]
 }
+
+export type DeleteFileReturnType = {
+    message: string
+}

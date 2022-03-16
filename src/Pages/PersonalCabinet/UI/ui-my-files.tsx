@@ -3,7 +3,7 @@ import React from 'react';
 import {PaperProps} from "@mui/material/Paper/Paper";
 import {Paper} from "@mui/material";
 import PCabinetObject from "../Store/p-cabinet-store";
-import FileFolder from "../../FileFolder/UI/file-folder";
+import FileFolder from "../../../Elements/FileFolder/UI/file-folder";
 
 
 interface IUIMyFilesProps extends PaperProps {

@@ -2,7 +2,7 @@ import {observer} from "mobx-react";
 import React from 'react';
 import {PaperProps} from "@mui/material/Paper/Paper";
 import {Grid, Paper, Stack} from "@mui/material";
-import IndexFileByID from "../../../Elements/FileByID/UI";
+import IndexFileByID from "../../FileByID/UI";
 import UploadFile from "./upload-file";
 
 
