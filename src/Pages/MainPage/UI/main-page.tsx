@@ -3,8 +3,8 @@ import React from 'react';
 import {PaperProps} from "@mui/material/Paper/Paper";
 import {Paper, Stack} from "@mui/material";
 import PageTitle from "./page-title";
-import LogInButton from "./login-button";
-import FileFolder from "../FileFolder/FileFolder";
+import FileFolder from "../../FileFolder/UI/file-folder";
+import FileFolderObject from "../../FileFolder/Store/file-folder-store";
 
 
 interface IMainPageProps extends PaperProps {
@@ -14,13 +14,10 @@ interface IMainPageProps extends PaperProps {
 const MainPage = observer(({...props}: IMainPageProps) => {
     return (
         <Paper elevation={0} {...props}>
-            <Stack alignItems={"end"}>
-                <LogInButton/>
-            </Stack>
             <Stack alignItems={"center"} sx={{pt: 2}}>
                 <PageTitle/>
             </Stack>
-            <FileFolder sx={{pt: 4}}/>
+            <FileFolder sx={{pt: 4}} filesIDArray={FileFolderObject.fileIDsForPage}/>
         </Paper>
     )
 })
