@@ -13,6 +13,8 @@ export default class FileByIdStore {
 
     id?: string
 
+    userStore = UserGlobalStore
+
     /**
      * Раздел отвечающий за расчеты всего, что отображается в UI
      */
@@ -43,7 +45,7 @@ export default class FileByIdStore {
     }
 
     get isUserCanDeleteFile() {
-        return Number(this.fileData?.user.id) === Number(UserGlobalStore.userData?.id)
+        return Number(this.fileData?.user.id) === Number(this.userStore.userData?.id)
     }
 
     /**
@@ -56,7 +58,7 @@ export default class FileByIdStore {
         this.loading = false
     }
 
-    private setFileData(fileData: FileEntity) {
+    setFileData(fileData: FileEntity) {
         this.fileData = fileData
     }
 

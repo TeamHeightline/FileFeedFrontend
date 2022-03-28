@@ -15,6 +15,7 @@ const UIFileAuthor = observer(({fileStore,}: IUIFileAuthorProps) => {
         <ListItem>
             <Tooltip title={fileStore.fileData?.user?.email || ""}>
                 <Chip
+                    id={"file-author"}
                     size={"small"}
                     label={fileStore.fileData?.user?.email}
                     icon={<AccountCircleIcon/>}/>
